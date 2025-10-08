@@ -1,4 +1,3 @@
-version: "3.9"
 services:
   main-db:
     image: postgres:16.1
@@ -27,3 +26,12 @@ services:
       test: ["CMD-SHELL", "pg_isready -U dbuser"]
       interval: 5s
       retries: 5
+
+  stats-server:
+    image: alpine:latest
+    container_name: stats_server
+    command: ["sh", "-c", "while true; do sleep 3600; done"]
+    depends_on:
+      - stats-db
+    ports:
+      - "9090:9090"
