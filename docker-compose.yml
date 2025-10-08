@@ -35,3 +35,8 @@ services:
       - stats-db
     ports:
       - "9090:9090"
+
+  ewm-service:
+    image: alpine:latest
+    container_name: ewm_service
+    command: ["sh", "-c", "while true; do sleep 3600; done"]
