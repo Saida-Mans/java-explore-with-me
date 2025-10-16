@@ -33,10 +33,10 @@ public class RequestServicelmpl implements RequestService {
      User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
      Event event = eventRepository.findById(eventId).orElseThrow(() -> new NotFoundException("Событие не найдено"));
      if (event.getInitiator().equals(user)) {
-        new ConflictException("Инициатор события не может добавить запрос на участие в своём событии");
+         throw new ConflictException("Инициатор события не может добавить запрос на участие в своём событии");
      }
      if (event.getState() != State.PUBLISHED) {
-         new ConflictException("Нельзя участвовать в неопубликованном событии");
+         throw new ConflictException("Нельзя участвовать в неопубликованном событии");
      }
      if (event.getRequests().size() >= event.getParticipantLimit()) {
          throw new ConflictException("Достигнут лимит участников события");

@@ -44,14 +44,14 @@ public class EventServicelmpl implements EventService {
         if (eventAdminRequest.getEventDate().isBefore(now.plusHours(1))) {
                throw new ConflictException("Дата начала события должна быть не ранее чем за час от даты публикации");
            }
-        if ("PUBLISH_EVENT".equals(eventAdminRequest.getAction())) {
+        if (eventAdminRequest.getAction() == Action.PUBLISH_EVENT) {
             if (event.getState() != State.PENDING) {
                 throw new ConflictException("Событие нельзя опубликовать, оно не в состоянии ожидания публикации (PENDING)");
             }
             event.setState(State.PUBLISHED);
             event.setPublishedOn(now);
         }
-        if ("REJECT_EVENT".equals(eventAdminRequest.getAction())) {
+        if (eventAdminRequest.getAction() == Action.REJECT_EVENT) {
             if (event.getState() == State.PUBLISHED) {
                 throw new ConflictException("Событие нельзя отклонить, оно уже опубликовано");
             }
