@@ -61,3 +61,8 @@ services:
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
       CLIENT_URL: http://stats-server:9090
+
+      # --- Фиктивный ewm-service для GitHub Actions ---
+      ewm-service:
+        image: busybox
+        command: [ "sh", "-c", "while true; do sleep 3600; done" ]
