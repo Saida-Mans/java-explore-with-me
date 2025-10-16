@@ -44,6 +44,7 @@ public class PublicCompilationClient {
             throw new RuntimeException("Сервис недоступен: " + e.getMessage(), e);
         }
     }
+
     public CompilationDto getById(Long compId) {
         try {
             return restTemplate.getForObject(baseUrl + "/" + compId, CompilationDto.class);
