@@ -10,7 +10,7 @@ import ru.yandex.practicum.compilation.CompilationDto;
 import ru.yandex.practicum.compilation.NewCompilationDto;
 import ru.yandex.practicum.compilation.mapper.CompilationMapper;
 import ru.yandex.practicum.compilation.model.Compilation;
-import ru.yandex.practicum.compilation.model.NewCompilation;
+import ru.yandex.practicum.compilation.NewCompilation;
 import ru.yandex.practicum.compilation.repository.CompilationRepository;
 import ru.yandex.practicum.event.EventShortDto;
 import ru.yandex.practicum.event.exception.ConflictException;

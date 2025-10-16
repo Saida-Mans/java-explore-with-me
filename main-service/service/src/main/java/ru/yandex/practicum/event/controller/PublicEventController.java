@@ -6,7 +6,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.CreateEndpointHitDto;
 import ru.yandex.practicum.event.EventFullDto;
-import ru.yandex.practicum.event.model.EventSearchParams;
+import ru.yandex.practicum.event.EventSearchParams;
 import ru.yandex.practicum.event.service.EventService;
 import ru.yandex.practicum.exception.StatsClient;
 import java.time.LocalDateTime;

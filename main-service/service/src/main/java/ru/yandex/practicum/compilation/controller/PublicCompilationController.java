@@ -2,7 +2,7 @@ package ru.yandex.practicum.compilation.controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import ru.yandex.practicum.compilation.model.NewCompilation;
+import ru.yandex.practicum.compilation.NewCompilation;
 import ru.yandex.practicum.compilation.CompilationDto;
 import ru.yandex.practicum.compilation.service.CompilationService;
 import java.util.List;

@@ -8,7 +8,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.ResourceAccessException;
-import ru.yandex.practicum.compilation.model.NewCompilation;
+
 import java.util.Arrays;
 import java.util.List;
 

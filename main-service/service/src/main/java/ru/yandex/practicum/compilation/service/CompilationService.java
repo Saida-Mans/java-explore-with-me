@@ -2,7 +2,7 @@ package ru.yandex.practicum.compilation.service;
 
 import ru.yandex.practicum.compilation.CompilationDto;
 import ru.yandex.practicum.compilation.NewCompilationDto;
-import ru.yandex.practicum.compilation.model.NewCompilation;
+import ru.yandex.practicum.compilation.NewCompilation;
 import java.util.List;
 
 public interface CompilationService {

@@ -3,7 +3,7 @@ package ru.yandex.practicum.category.controller;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.category.CategoryDto;
-import ru.yandex.practicum.category.model.NewCategory;
+import ru.yandex.practicum.category.NewCategory;
 import ru.yandex.practicum.category.service.CategoryService;
 import java.util.List;
 

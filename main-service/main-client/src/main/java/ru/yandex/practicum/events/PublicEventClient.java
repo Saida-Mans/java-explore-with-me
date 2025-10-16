@@ -10,7 +10,7 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.ResourceAccessException;
 import ru.yandex.practicum.CreateEndpointHitDto;
 import ru.yandex.practicum.event.EventFullDto;
-import ru.yandex.practicum.event.model.EventSearchParams;
+import ru.yandex.practicum.event.EventSearchParams;
 import ru.yandex.practicum.exception.StatsClient;
 import java.util.Arrays;
 import java.util.List;

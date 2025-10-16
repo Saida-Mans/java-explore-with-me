@@ -1,4 +1,4 @@
-package ru.yandex.practicum.compilation.model;
+package ru.yandex.practicum.compilation;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

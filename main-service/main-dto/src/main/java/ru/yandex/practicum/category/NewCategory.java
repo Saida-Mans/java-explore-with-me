@@ -1,4 +1,4 @@
-package ru.yandex.practicum.category.model;
+package ru.yandex.practicum.category;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.event.EventFullDto;
 import ru.yandex.practicum.event.State;
 import ru.yandex.practicum.event.UpdateEventAdminRequest;
-import ru.yandex.practicum.event.model.AdminEventSearchParams;
+import ru.yandex.practicum.event.AdminEventSearchParams;
 import ru.yandex.practicum.event.service.EventService;
 import java.time.LocalDateTime;
 import java.util.List;

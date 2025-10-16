@@ -1,8 +1,8 @@
 package ru.yandex.practicum.event.service;
 
 import ru.yandex.practicum.event.*;
-import ru.yandex.practicum.event.model.AdminEventSearchParams;
-import ru.yandex.practicum.event.model.EventSearchParams;
+import ru.yandex.practicum.event.AdminEventSearchParams;
+import ru.yandex.practicum.event.EventSearchParams;
 import ru.yandex.practicum.request.ParticipationRequestDto;
 import java.util.List;
 

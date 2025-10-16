@@ -7,7 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.category.CategoryDto;
-import ru.yandex.practicum.category.model.NewCategory;
+import ru.yandex.practicum.category.NewCategory;
 import ru.yandex.practicum.category.repository.CategoryRepository;
 import ru.yandex.practicum.category.NewCategoryDto;
 import ru.yandex.practicum.category.mapper.CategoryMapper;

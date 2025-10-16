@@ -3,7 +3,7 @@ package ru.yandex.practicum.category.service;
 import org.springframework.web.bind.annotation.PathVariable;
 import ru.yandex.practicum.category.CategoryDto;
 import ru.yandex.practicum.category.NewCategoryDto;
-import ru.yandex.practicum.category.model.NewCategory;
+import ru.yandex.practicum.category.NewCategory;
 import java.util.List;
 
 public interface CategoryService {
