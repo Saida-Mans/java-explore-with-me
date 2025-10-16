@@ -7,7 +7,6 @@ import ru.yandex.practicum.compilation.NewCompilationDto;
 import ru.yandex.practicum.compilation.model.Compilation;
 import ru.yandex.practicum.event.mapper.EventMapper;
 import ru.yandex.practicum.event.model.Event;
-import ru.yandex.practicum.event.repository.EventRepository;
 import java.util.List;
 
 @AllArgsConstructor

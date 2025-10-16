@@ -17,6 +17,7 @@ import java.util.List;
 public class AdminEventController {
 
     private final EventService eventService;
+
     @PatchMapping("{eventId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void update(@PathVariable int eventId, @RequestBody UpdateEventAdminRequest updateEventAdminRequest) {

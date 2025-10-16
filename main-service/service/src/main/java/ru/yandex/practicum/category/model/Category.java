@@ -23,5 +23,5 @@ public class Category {
 
     @OneToMany
     @JoinColumn(name = "event_id", nullable = false)
-    private List<Event> events ;
+    private List<Event> events;
 }

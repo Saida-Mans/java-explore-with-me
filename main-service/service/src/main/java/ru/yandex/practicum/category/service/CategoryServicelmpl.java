@@ -1,6 +1,6 @@
 package ru.yandex.practicum.category.service;
 
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -26,6 +26,7 @@ public class CategoryServicelmpl implements CategoryService {
     private final EventRepository eventRepository;
 
     @Transactional
+    @Override
     public CategoryDto create(NewCategoryDto newCategoryDto) {
         if (categoryRepository.existsByName(newCategoryDto.getName())) {
             throw new ConflictException("Категория с таким именем уже существует");
@@ -37,6 +38,7 @@ public class CategoryServicelmpl implements CategoryService {
     }
 
     @Transactional
+    @Override
     public CategoryDto update(Long catId, NewCategoryDto newCategoryDto) {
         Category category = categoryRepository.findById(catId)
                 .orElseThrow(() -> new NotFoundException("Category with id=" + catId + " was not found"));
@@ -50,6 +52,7 @@ public class CategoryServicelmpl implements CategoryService {
     }
 
     @Transactional
+    @Override
     public void delete(Long catId) {
         Category category = categoryRepository.findById(catId)
                 .orElseThrow(() -> new NotFoundException("Category with id=" + catId + " was not found"));
@@ -60,6 +63,7 @@ public class CategoryServicelmpl implements CategoryService {
         categoryRepository.delete(category);
     }
 
+    @Override
     public List<CategoryDto> getAll(NewCategory newCategory) {
         Pageable pageable = PageRequest.of(newCategory.getFrom() / newCategory.getSize(), newCategory.getSize());
         Page<Category> page = categoryRepository.findAllCategories(pageable);
@@ -68,6 +72,7 @@ public class CategoryServicelmpl implements CategoryService {
                 .toList();
     }
 
+    @Override
     public CategoryDto getById(Long catId) {
         Category category = categoryRepository.findById(catId).orElseThrow(() -> new NotFoundException("Категория не найдена или недоступна"));
         CategoryDto categoryDto = CategoryMapper.maptoCategoryDto(category);

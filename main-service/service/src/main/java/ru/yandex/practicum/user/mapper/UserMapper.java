@@ -13,7 +13,7 @@ import java.util.List;
 @Component
 public class UserMapper {
 
-    public static User mapToUser(NewUserRequest newUserRequest){
+    public static User mapToUser(NewUserRequest newUserRequest) {
      User user = new User();
      user.setEmail(newUserRequest.getEmail());
      user.setName(newUserRequest.getName());

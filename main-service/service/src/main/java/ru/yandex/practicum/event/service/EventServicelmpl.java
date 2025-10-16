@@ -1,6 +1,6 @@
 package ru.yandex.practicum.event.service;
 
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,6 +27,7 @@ import java.util.*;
 
 @Service
 @AllArgsConstructor
+@Transactional(readOnly = true)
 public class EventServicelmpl implements EventService {
 
     private final EventRepository eventRepository;
@@ -35,7 +36,8 @@ public class EventServicelmpl implements EventService {
     private  final UserRepository userRepository;
     private final RequestRepository requestRepository;
 
-
+    @Transactional
+    @Override
     public void update(int eventId, UpdateEventAdminRequest eventAdminRequest) {
         Event event = eventRepository.findById(eventId).orElseThrow(() -> new NotFoundException("Событие не найдено или недоступно"));
         LocalDateTime now = LocalDateTime.now();
@@ -125,6 +127,7 @@ public class EventServicelmpl implements EventService {
         return eventFullDto;
     }
 
+    @Transactional
     @Override
     public EventFullDto create(Long userId, NewEventDto newEventDto) {
         LocalDateTime now = LocalDateTime.now();
@@ -142,6 +145,7 @@ public class EventServicelmpl implements EventService {
         return eventMapper.mapToEventFullDto(event);
     }
 
+    @Transactional
     @Override
     public void updatePrivateUser(long userId, NewEventDto newEventDto, int eventId) {
         User user = userRepository.findById(userId)
@@ -193,6 +197,7 @@ public class EventServicelmpl implements EventService {
     }
 
     @Transactional
+    @Override
     public EventRequestStatusResult updateStatus(long userId, int eventId, EventRequestStatusUpdateRequest updateRequest) {
         Event event = eventRepository.findById(eventId)
                 .orElseThrow(() -> new NotFoundException("Событие не найдено"));

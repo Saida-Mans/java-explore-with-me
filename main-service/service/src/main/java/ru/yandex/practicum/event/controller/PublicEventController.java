@@ -19,6 +19,7 @@ public class PublicEventController {
 
     private final EventService eventService;
     private final StatsClient statsClient;
+
     @GetMapping
     public List<EventFullDto> getAll( @RequestParam(required = false) String text,
             @RequestParam(required = false) List<Long> categories,

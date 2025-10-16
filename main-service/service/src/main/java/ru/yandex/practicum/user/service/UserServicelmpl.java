@@ -31,7 +31,7 @@ public class UserServicelmpl implements UserService {
     public List<NewUserDto> getUsers(NewUserCreate newUserCreate) {
         Pageable pageable = PageRequest.of(newUserCreate.getFrom()/newUserCreate.getSize(), newUserCreate.getSize());
         List<User> users;
-        if (newUserCreate.getIds() == null || newUserCreate.getIds().isEmpty()){
+        if (newUserCreate.getIds() == null || newUserCreate.getIds().isEmpty()) {
           users = userRepository.getAllUsers(pageable).getContent();
         } else {
             users = userRepository.getUsersByIds(newUserCreate.getIds(), pageable).getContent();

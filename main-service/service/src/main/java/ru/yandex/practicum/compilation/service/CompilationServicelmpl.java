@@ -1,6 +1,7 @@
 package ru.yandex.practicum.compilation.service;
 
 import lombok.AllArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -29,6 +30,7 @@ public class CompilationServicelmpl implements CompilationService {
     private final EventMapper eventMapper;
     private  final CompilationMapper compilationMapper;
 
+    @Transactional
     @Override
     public CompilationDto create(NewCompilationDto newCompilationDto) {
         List<Event> events = eventRepository.findAllById(newCompilationDto.getEvents());
@@ -43,6 +45,7 @@ public class CompilationServicelmpl implements CompilationService {
         return compilationMapper.toDto(saved);
     }
 
+    @Transactional
     @Override
     public CompilationDto update(Long compId, NewCompilationDto newCompilationDto) {
         Compilation compilation = compilationRepository.findById(compId)
@@ -55,6 +58,7 @@ public class CompilationServicelmpl implements CompilationService {
         return compilationMapper.toDto(saved);
     }
 
+    @Transactional
     @Override
     public void delete(Long compId) {
         if (!compilationRepository.existsById(compId)) {

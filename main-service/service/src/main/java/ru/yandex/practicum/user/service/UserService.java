@@ -6,6 +6,7 @@ import ru.yandex.practicum.user.model.NewUserCreate;
 import java.util.List;
 
 public interface UserService {
+
   NewUserDto create(NewUserRequest newUserRequest);
 
   List<NewUserDto> getUsers(NewUserCreate newUserCreate);

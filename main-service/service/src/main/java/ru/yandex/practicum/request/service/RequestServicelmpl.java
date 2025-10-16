@@ -1,6 +1,6 @@
 package ru.yandex.practicum.request.service;
 
-import jakarta.transaction.Transactional;
+import org.springframework.transaction.annotation.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import ru.yandex.practicum.event.State;
@@ -20,12 +20,14 @@ import java.util.List;
 
 @AllArgsConstructor
 @Service
+@Transactional(readOnly = true)
 public class RequestServicelmpl implements RequestService {
 
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
     private final RequestRepository requestRepository;
 
+    @Transactional
     @Override
     public ParticipationRequestDto createRequest(long userId, int eventId) {
      User user = userRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь не найден"));
@@ -54,7 +56,9 @@ public class RequestServicelmpl implements RequestService {
         return RequestMapper.toDto(request);
     }
 
+
     @Transactional
+    @Override
     public ParticipationRequestDto cancelRequest(long userId, long requestId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new NotFoundException("Пользователь не найден"));
