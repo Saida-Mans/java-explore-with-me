@@ -47,7 +47,7 @@ services:
 
   # --- Основное приложение ---
   main-service:
-    build: ./main-service
+    build: ./main-service/service
     container_name: main_service
     ports:
       - "8080:8080"
