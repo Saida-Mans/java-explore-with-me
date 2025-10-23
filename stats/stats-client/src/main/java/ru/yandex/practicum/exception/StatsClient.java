@@ -2,19 +2,12 @@ package ru.yandex.practicum.exception;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.web.client.RestTemplateBuilder;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.client.HttpServerErrorException;
-import org.springframework.web.client.ResourceAccessException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 import ru.yandex.practicum.CreateEndpointHitDto;
-import ru.yandex.practicum.StatsRequest;
 import ru.yandex.practicum.ViewStatsDto;
-
 import java.net.URI;
 import java.time.format.DateTimeFormatter;
 import java.time.LocalDateTime;
@@ -38,26 +31,20 @@ public class StatsClient {
     }
 
     public List<ViewStatsDto> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, boolean unique) {
-
         DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         String s = fmt.format(start).replace(" ", "%20");
         String e = fmt.format(end).replace(" ", "%20");
-
         StringBuilder qs = new StringBuilder("start=").append(s)
                 .append("&end=").append(e)
                 .append("&unique=").append(unique);
-
         if (uris != null && !uris.isEmpty()) {
             for (String u : uris) {
-                // Минимальная экранизация для безопасности: пробелы → %20
                 String enc = u.replace(" ", "%20");
                 qs.append("&uris=").append(enc);
             }
         }
-
         URI uri = URI.create(baseUrl + "/stats?" + qs);
         ResponseEntity<ViewStatsDto[]> r = rest.getForEntity(uri, ViewStatsDto[].class);
-
         if (r.getBody() == null) {
             return Collections.emptyList();
         } else {
