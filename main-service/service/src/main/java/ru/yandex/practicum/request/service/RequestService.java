@@ -1,14 +1,19 @@
 package ru.yandex.practicum.request.service;
 
-import ru.yandex.practicum.request.ParticipationRequestDto;
-
+import ru.yandex.practicum.request.dto.RequestDto;
+import ru.yandex.practicum.request.dto.RequestListDto;
+import ru.yandex.practicum.request.dto.UpdateResultDto;
 import java.util.List;
 
 public interface RequestService {
 
-    ParticipationRequestDto createRequest(long userId, int eventId);
+    RequestDto saveRequest(Integer eventId, Integer requesterId);
 
-    ParticipationRequestDto cancelRequest(long userId, long requestId);
+    List<RequestDto> getRequestsByUserId(Integer requesterId);
 
-    List<ParticipationRequestDto> getUserRequests(long userId);
+    RequestDto cancelRequestByRequester(Integer requesterId, Integer requestId);
+
+    List<RequestDto> getRequestsByEventId(Integer eventId, Integer userId);
+
+    UpdateResultDto acceptRequestByEventInitiator(RequestListDto requestListDto, Integer userId, Integer eventId);
 }

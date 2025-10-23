@@ -15,51 +15,54 @@ import ru.yandex.practicum.CreateEndpointHitDto;
 import ru.yandex.practicum.StatsRequest;
 import ru.yandex.practicum.ViewStatsDto;
 
+import java.net.URI;
+import java.time.format.DateTimeFormatter;
+import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 
 @Service
 public class StatsClient {
-    private final RestTemplate restTemplate;
+    private final RestTemplate rest;
     private final String baseUrl;
 
-    public StatsClient(@Value("${stats.url}") String serverUrl, RestTemplateBuilder builder) {
-        this.baseUrl = serverUrl;
-        this.restTemplate = builder
-                .uriTemplateHandler(new DefaultUriBuilderFactory(serverUrl))
-                .build();
+    public StatsClient(RestTemplateBuilder builder, @Value("${stats.url}") String baseUrl) {
+        this.baseUrl = baseUrl;
+        DefaultUriBuilderFactory factory = new DefaultUriBuilderFactory(baseUrl);
+        this.rest = builder.uriTemplateHandler(factory).build();
     }
 
-    public void createHit(CreateEndpointHitDto createEndpointHitDto) {
-        try {
-            HttpEntity<CreateEndpointHitDto> request = new HttpEntity<>(createEndpointHitDto);
-            restTemplate.exchange(baseUrl + "/hit", HttpMethod.POST, request, Void.class);
-        } catch (HttpClientErrorException | HttpServerErrorException e) {
-            throw new RuntimeException("Ошибка при отправке хита на stats-server: " + e.getMessage(), e);
-        } catch (ResourceAccessException e) {
-            throw new RuntimeException("Stats-server недоступен: " + e.getMessage(), e);
-        }
+    public void sendHit(CreateEndpointHitDto dto) {
+        rest.postForEntity("/hit", dto, Void.class);
     }
 
-    public List<ViewStatsDto> getStats(StatsRequest statsRequest) {
-        try {
-            StringBuilder urlBuilder = new StringBuilder(baseUrl + "/stats")
-                    .append("?start=").append(statsRequest.getStart())
-                    .append("&end=").append(statsRequest.getEnd())
-                    .append("&unique=").append(statsRequest.isUnique());
+    public List<ViewStatsDto> getStats(LocalDateTime start, LocalDateTime end, List<String> uris, boolean unique) {
 
-            if (statsRequest.getUris() != null && !statsRequest.getUris().isEmpty()) {
-                for (String uri : statsRequest.getUris()) {
-                    urlBuilder.append("&uris=").append(uri);
-                }
+        DateTimeFormatter fmt = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String s = fmt.format(start).replace(" ", "%20");
+        String e = fmt.format(end).replace(" ", "%20");
+
+        StringBuilder qs = new StringBuilder("start=").append(s)
+                .append("&end=").append(e)
+                .append("&unique=").append(unique);
+
+        if (uris != null && !uris.isEmpty()) {
+            for (String u : uris) {
+                // Минимальная экранизация для безопасности: пробелы → %20
+                String enc = u.replace(" ", "%20");
+                qs.append("&uris=").append(enc);
             }
-            ResponseEntity<ViewStatsDto[]> response = restTemplate.getForEntity(urlBuilder.toString(), ViewStatsDto[].class);
-            return Arrays.asList(response.getBody());
+        }
 
-        } catch (HttpClientErrorException | HttpServerErrorException e) {
-            throw new RuntimeException("Ошибка при получении статистики: " + e.getMessage(), e);
-        } catch (ResourceAccessException e) {
-            throw new RuntimeException("Stats-server недоступен: " + e.getMessage(), e);
+        URI uri = URI.create(baseUrl + "/stats?" + qs);
+        ResponseEntity<ViewStatsDto[]> r = rest.getForEntity(uri, ViewStatsDto[].class);
+
+        if (r.getBody() == null) {
+            return Collections.emptyList();
+        } else {
+            return Arrays.asList(r.getBody());
+        }
         }
     }
-}
+

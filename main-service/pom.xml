@@ -13,8 +13,6 @@
     <artifactId>main-service</artifactId>
     <packaging>pom</packaging>
     <modules>
-        <module>main-client</module>
-        <module>main-dto</module>
         <module>service</module>
     </modules>
 

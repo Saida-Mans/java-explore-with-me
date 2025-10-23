@@ -1,25 +1,18 @@
 package ru.yandex.practicum.category.mapper;
 
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Component;
-import ru.yandex.practicum.category.CategoryDto;
-import ru.yandex.practicum.category.NewCategoryDto;
 import ru.yandex.practicum.category.model.Category;
+import ru.yandex.practicum.category.dto.NewCategoryDto;
+import ru.yandex.practicum.category.dto.CategoryDto;
 
-@Component
-@AllArgsConstructor
 public class CategoryMapper {
 
-    public static Category mapToCategory(NewCategoryDto newCategoryDto) {
+    public static Category categoryWriteDtoToCategory(NewCategoryDto categoryDto) {
         Category category = new Category();
-        category.setName(newCategoryDto.getName());
+        category.setName(categoryDto.getName());
         return category;
     }
 
-    public static CategoryDto maptoCategoryDto(Category category) {
-        CategoryDto categoryDto = new CategoryDto();
-        categoryDto.setId(category.getId());
-        categoryDto.setName(category.getName());
-        return categoryDto;
+    public static CategoryDto categorytoCategoryReadDto(Category category) {
+        return new CategoryDto(category.getId(), category.getName());
     }
 }

@@ -1,20 +1,18 @@
 package ru.yandex.practicum.category.service;
 
-import org.springframework.web.bind.annotation.PathVariable;
-import ru.yandex.practicum.category.CategoryDto;
-import ru.yandex.practicum.category.NewCategoryDto;
-import ru.yandex.practicum.category.NewCategory;
+import ru.yandex.practicum.category.dto.CategoryDto;
+import ru.yandex.practicum.category.dto.NewCategoryDto;
 import java.util.List;
 
 public interface CategoryService {
 
-    CategoryDto create(NewCategoryDto newCategoryDto);
+    CategoryDto saveCategory(NewCategoryDto categoryWriteDto);
 
-    CategoryDto update(Long catId, NewCategoryDto newCategoryDto);
+    void deleteCategory(Integer id);
 
-    void delete(@PathVariable Long catId);
+    CategoryDto updateCategory(Integer id, NewCategoryDto categoryWriteDto);
 
-    List<CategoryDto> getAll(NewCategory newCategory);
+    List<CategoryDto> getCategories(Integer from, Integer size);
 
-    CategoryDto getById(Long catId);
+    CategoryDto getCategoryById(Integer id);
 }

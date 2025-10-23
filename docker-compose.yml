@@ -55,7 +55,7 @@ services:
       main-db:
         condition: service_healthy
       stats-server:
-        condition: service_started
+        condition: service_healthy
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://main-db:5432/mydb
       SPRING_DATASOURCE_USERNAME: postgres

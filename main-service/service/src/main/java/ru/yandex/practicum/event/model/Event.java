@@ -3,78 +3,77 @@ package ru.yandex.practicum.event.model;
 import jakarta.persistence.*;
 import lombok.*;
 import ru.yandex.practicum.category.model.Category;
-import ru.yandex.practicum.compilation.model.Compilation;
-import ru.yandex.practicum.event.State;
-import ru.yandex.practicum.request.model.Requests;
+import ru.yandex.practicum.event.dto.State;
 import ru.yandex.practicum.user.model.User;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
-@Table(name = "events")
 @Getter
-@Setter
+@Table(name = "events")
 @NoArgsConstructor
-@AllArgsConstructor
-@Builder
-@EqualsAndHashCode(onlyExplicitlyIncluded = true)
 public class Event {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column(name = "event_id")
+    private Integer id;
 
-    @Column(name = "annotation", nullable = false)
+    @Setter
     private String annotation;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id")
     private Category category;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User initiator;
+    @Setter
+    @Column(name = "confirmed_requests")
+    private Integer confirmedRequests;
 
-    @Column(name = "lat")
-    private Double lat;
-
-    @Column(name = "lon")
-    private Double lon;
-
-    @Column(nullable = false)
-    private String title;
-
-    @Column(length = 1000)
-    private String description;
-
-    @Column(name = "event_date", nullable = false)
-    private LocalDateTime eventDate;
-
-    @Column(name = "created_on", nullable = false)
+    @Setter
+    @Column(name = "created_on")
     private LocalDateTime createdOn;
 
+    @Setter
+    private String description;
+
+    @Setter
+    @Column(name = "event_date")
+    private LocalDateTime eventDate;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "initiator_id")
+    private User initiator;
+
+    @Setter
+    @Embedded
+    @AttributeOverrides({ @AttributeOverride(name = "lat", column = @Column(name = "lat", nullable = false)),
+            @AttributeOverride(name = "lon", column = @Column(name = "lon", nullable = false))})
+    private Location location;
+
+    @Setter
+    private Boolean paid;
+
+    @Setter
+    @Column(name = "participant_limit")
+    private Integer participantLimit;
+
+    @Setter
     @Column(name = "published_on")
     private LocalDateTime publishedOn;
 
+    @Setter
+    @Column(name = "request_moderation")
+    private Boolean requestModeration;
+
+    @Setter
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
     private State state;
 
-    @Column(nullable = false)
-    private boolean paid;
+    @Setter
+    private String title;
 
-    @Column(name = "participant_limit")
-    private int participantLimit;
-
-    @Column(name = "request_moderation")
-    private boolean requestModeration;
-
-    @Column
-    private int views;
-
-    @OneToMany(mappedBy = "event")
-    private List<Requests> requests;
-
-    @ManyToOne
-    @JoinColumn(name = "compilation_id")
-    private Compilation compilation;
+    public Event(Category category, User initiator) {
+        this.category = category;
+        this.initiator = initiator;
+    }
 }

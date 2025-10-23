@@ -1,30 +1,41 @@
 package ru.yandex.practicum.event.service;
 
-import ru.yandex.practicum.event.*;
-import ru.yandex.practicum.event.AdminEventSearchParams;
-import ru.yandex.practicum.event.EventSearchParams;
-import ru.yandex.practicum.request.ParticipationRequestDto;
+import jakarta.servlet.http.HttpServletRequest;
+import ru.yandex.practicum.event.dto.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface EventService {
 
-    void update(int eventId, UpdateEventAdminRequest eventAdminRequest);
+    EventFullDto saveEvent(NewEventDto eventWriteDto, Integer userId);
 
-    List<EventFullDto> getAll(AdminEventSearchParams eventCreate);
+    EventFullDto getByIdByOwner(Integer eventId, Integer userId);
 
-    List<EventFullDto> findAll(EventSearchParams eventSearchParams);
+    List<EventShortDto> getListByOwner(Integer userId, Integer from, Integer size);
 
-    EventFullDto getById(int id);
+    EventFullDto updateEvent(NewEventDto eventWriteDto, Integer eventId, Integer userId);
 
-    EventFullDto create(Long userId, NewEventDto newEventDto);
+    List<EventFullDto> getListByAdmin(List<Integer> users,
+                                          List<State> states,
+                                          List<Integer> categories,
+                                          LocalDateTime rangeStart,
+                                          LocalDateTime rangeEnd,
+                                          Integer from,
+                                          Integer size);
 
-    void updatePrivateUser(long userId, NewEventDto newEventDto, int eventId);
+    EventFullDto updateEventByAdmin(NewEventDto eventWriteDto, Integer eventId);
 
-    List<EventFullDto> findByUserId(long userId, int from, int size);
+    List<EventShortDto> getEventsByPublic(String text,
+                                              List<Integer> categories,
+                                              Boolean paid,
+                                              LocalDateTime rangeStart,
+                                              LocalDateTime rangeEnd,
+                                              boolean onlyAvailable,
+                                              String sort,
+                                              Integer from,
+                                              Integer size);
 
-    EventFullDto getEventByUser(long userId, long eventId);
+    EventFullDto getEventByIdByPublic(Integer eventId);
 
-    List<ParticipationRequestDto> getEvent(long userId, long eventId);
-
-    EventRequestStatusResult updateStatus(long userId, int eventId, EventRequestStatusUpdateRequest updateRequest);
+    EventFullDto setViewsToEvent(HttpServletRequest request, EventFullDto eventReadFullDto);
 }

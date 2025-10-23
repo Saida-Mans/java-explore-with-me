@@ -1,15 +1,16 @@
 package ru.yandex.practicum.user.service;
 
-import ru.yandex.practicum.user.NewUserDto;
-import ru.yandex.practicum.user.NewUserRequest;
-import ru.yandex.practicum.user.model.NewUserCreate;
+import ru.yandex.practicum.user.dto.NewUserRequest;
+import ru.yandex.practicum.user.dto.UserDto;
 import java.util.List;
 
 public interface UserService {
 
-  NewUserDto create(NewUserRequest newUserRequest);
+  UserDto saveUser(NewUserRequest userWriteDto);
 
-  List<NewUserDto> getUsers(NewUserCreate newUserCreate);
+  List<UserDto> getUsersByListId(List<Integer> ids);
 
-  void deleteUserById(Long userId);
+  List<UserDto> getUsersByOffset(Integer from, Integer size);
+
+  void deleteUser(Integer id);
 }
