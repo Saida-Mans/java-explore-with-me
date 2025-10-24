@@ -61,17 +61,14 @@ public class CompilationServiceImpl implements CompilationService {
                     .filter(entity -> entity.getPublishedOn() != null)
                     .map(entity -> entity.getPublishedOn())
                     .min(LocalDateTime::compareTo).get();
-
-            Map<Integer, Long> viewsById = Collections.emptyMap();
             List<ViewStatsDto> stats = client.getStats(minStart,
                     LocalDateTime.now(),
                     new ArrayList<>(urisById.values()),
                     true);
-            viewsById = stats.stream().collect(Collectors.toMap(
+            Map<Integer, Long> viewsById = stats.stream().collect(Collectors.toMap(
                     s -> Integer.parseInt(s.getUri().substring(s.getUri().lastIndexOf('/') + 1)),
                     s -> s.getHits()));
             final Map<Integer, Long> viewsByIdFinal = viewsById;
-
             List<EventShortDto> resultEvents = events.stream()
                     .map(entity -> {
                         Integer views = 0;
@@ -128,12 +125,11 @@ public class CompilationServiceImpl implements CompilationService {
                     .filter(entity -> entity.getPublishedOn() != null)
                     .map(entity -> entity.getPublishedOn())
                     .min(LocalDateTime::compareTo).get();
-            Map<Integer, Long> viewsById = Collections.emptyMap();
             List<ViewStatsDto> stats = client.getStats(minStart,
                     LocalDateTime.now(),
                     new ArrayList<>(urisById.values()),
                     true);
-            viewsById = stats.stream().collect(Collectors.toMap(
+            Map<Integer, Long> viewsById = stats.stream().collect(Collectors.toMap(
                     s -> Integer.parseInt(s.getUri().substring(s.getUri().lastIndexOf('/') + 1)),
                     s -> s.getHits()));
             final Map<Integer, Long> viewsByIdFinal = viewsById;
