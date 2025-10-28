@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import ru.yandex.practicum.comments.dto.CommentDto;
 import ru.yandex.practicum.event.dto.State;
 import ru.yandex.practicum.event.model.Event;
 import java.time.LocalDateTime;

@@ -3,9 +3,12 @@ package ru.yandex.practicum.event.model;
 import jakarta.persistence.*;
 import lombok.*;
 import ru.yandex.practicum.category.model.Category;
+import ru.yandex.practicum.comments.model.Comment;
 import ru.yandex.practicum.event.dto.State;
 import ru.yandex.practicum.user.model.User;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -71,6 +74,10 @@ public class Event {
 
     @Setter
     private String title;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "event")
+    private List<Comment> comments = new ArrayList<>();
 
     public Event(Category category, User initiator) {
         this.category = category;
