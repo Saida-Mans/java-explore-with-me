@@ -30,15 +30,18 @@ public class StatsServicelmpl implements StatsService {
 
     @Override
     public List<ViewStatsDto> getStats(StatsRequest statsRequest) {
-      List<String> uris = (statsRequest.getUris() == null || statsRequest.getUris().isEmpty())
-              ? null : statsRequest.getUris();
-      List<ViewStatsDto> viewStatsDto;
+        List<String> uris = statsRequest.getUris();
+        boolean hasUris = uris != null && !uris.isEmpty();
+
         if (statsRequest.isUnique()) {
-            viewStatsDto = statsRepository.getUniqueIpStats(statsRequest.getStart(), statsRequest.getEnd(), uris);
+            return hasUris
+                    ? statsRepository.getUniqueIpStats(statsRequest.getStart(), statsRequest.getEnd(), uris)
+                    : statsRepository.getUniqueIpStatsWithoutUris(statsRequest.getStart(), statsRequest.getEnd());
         } else {
-            viewStatsDto = statsRepository.getUniqueAllStats(statsRequest.getStart(), statsRequest.getEnd(), uris);
+            return hasUris
+                    ? statsRepository.getAllIpStats(statsRequest.getStart(), statsRequest.getEnd(), uris)
+                    : statsRepository.getAllIpStatsWithoutUris(statsRequest.getStart(), statsRequest.getEnd());
         }
-      return  viewStatsDto;
     }
 }
 

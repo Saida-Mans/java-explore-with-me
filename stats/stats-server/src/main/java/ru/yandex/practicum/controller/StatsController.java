@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.yandex.practicum.CreateEndpointHitDto;
 import ru.yandex.practicum.StatsRequest;
 import ru.yandex.practicum.ViewStatsDto;
+import ru.yandex.practicum.exception.BadRequestException;
 import ru.yandex.practicum.mapper.EndpointHitMapper;
 import ru.yandex.practicum.server.StatsService;
 
@@ -28,6 +29,9 @@ public class StatsController {
                                        @RequestParam(value = "uris", required = false) List<String> uris,
                                        @RequestParam(value = "unique", defaultValue = "false") boolean unique) {
         StatsRequest statsRequest = EndpointHitMapper.mapToStatsRequest(start, end, uris, unique);
+        if (statsRequest.getStart().isAfter(statsRequest.getEnd())) {
+            throw new BadRequestException("Дата начала должна быть раньше даты окончания");
+        }
         return statsService.getStats(statsRequest);
     }
 }
