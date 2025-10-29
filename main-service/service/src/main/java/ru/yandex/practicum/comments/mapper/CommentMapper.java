@@ -3,7 +3,6 @@ package ru.yandex.practicum.comments.mapper;
 import org.springframework.stereotype.Component;
 import ru.yandex.practicum.comments.dto.CommentDto;
 import ru.yandex.practicum.comments.dto.NewCommentsRequest;
-import ru.yandex.practicum.comments.dto.UpdateCommentDto;
 import ru.yandex.practicum.comments.model.Comment;
 import ru.yandex.practicum.event.model.Event;
 import ru.yandex.practicum.user.model.User;
