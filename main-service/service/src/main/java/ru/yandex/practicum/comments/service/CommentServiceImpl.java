@@ -45,8 +45,9 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public CommentDto updateComment(Integer userId, Integer eventId, Long commentId, UpdateCommentDto updateCommentDto) {
         Comment comment = commentRepository.findByIdAndUser_IdAndEvent_Id(commentId, userId, eventId).orElseThrow(() -> new NotFoundException("Комментарий не найден"));
-        commentMapper.updatedComment(comment, updateCommentDto);
-        commentRepository.save(comment);
+        if (updateCommentDto.getText() != null && !updateCommentDto.getText().isBlank()) {
+            comment.setText(updateCommentDto.getText());
+        }
         CommentDto commentDto = commentMapper.toCommentDto(comment);
         return commentDto;
     }

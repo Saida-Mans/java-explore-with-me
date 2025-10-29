@@ -30,11 +30,4 @@ public class CommentMapper {
         commentDto.setCreatedDate(comment.getCreatedDate());
         return commentDto;
     }
-
-    public Comment updatedComment(Comment comment, UpdateCommentDto updateCommentDto) {
-        if (updateCommentDto.getText() != null && !updateCommentDto.getText().isBlank()) {
-            comment.setText(updateCommentDto.getText());
-        }
-        return comment;
-    }
 }
